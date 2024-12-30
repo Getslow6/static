@@ -1,0 +1,13 @@
+services:
+  openvscode-server:
+    image: lscr.io/linuxserver/openvscode-server:latest
+    container_name: vscode
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /srv:/config
+    ports:
+      - 3000:3000
+    restart: unless-stopped

@@ -13,6 +13,9 @@ services:
 
     # Command to run Cloudflare Tunnel
     command: tunnel run                               # Command to start the Cloudflare tunnel
+    
+    environment:
+     - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
     # Volume configuration for time synchronization and hosts file persistence
     volumes:
