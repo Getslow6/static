@@ -1,0 +1,18 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:alpine-sts
+    container_name: portainer 
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /srv/applications/portainer/data:/data
+    ports:
+      - 9443:9443
+    command: ["--templates", "http://portainer-templates/portainer-templates.json"]
+
+  nginx:
+    image: nginx:latest
+    container_name: portainer-templates
+    volumes:
+      - /srv:/usr/share/nginx/html:ro

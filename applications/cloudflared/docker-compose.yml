@@ -1,0 +1,32 @@
+services:
+
+  # Cloudflare Tunnel Service
+  cloudflare-tunnel:
+    image: cloudflare/cloudflared:latest              # Pull the latest version of the Cloudflare Tunnel image
+    container_name: cloudflare-tunnel                 # Name of the Cloudflare Tunnel container
+    hostname: cloudflare-tunnel                       # Hostname for the Cloudflare Tunnel container
+
+    restart: unless-stopped                           # Restart the container unless manually stopped
+
+    # Network mode configuration
+    network_mode: "host"                              # Use the host network (no isolation between host and container)
+
+    # Command to run Cloudflare Tunnel
+    command: tunnel run                               # Command to start the Cloudflare tunnel
+
+    # Volume configuration for time synchronization and hosts file persistence
+    volumes:
+      - /etc/localtime:/etc/localtime:ro              # Synchronize time with the host
+      - ./config/hosts:/etc/hosts                     # Mount hosts file from host to container
+
+    # Health check configuration to verify Cloudflare Tunnel readiness
+    healthcheck:
+      test: ["CMD", "cloudflared", "--version"]       # Check if cloudflared version command works
+      interval: 30s                                   # Time between health check attempts
+      timeout: 10s                                    # Time to wait for a response
+      retries: 3                                      # Number of retries before marking as unhealthy
+      start_period: 10s                               # Delay before health checks begin
+
+    # Container labels for additional metadata
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"  # Enable automatic updates with Watchtower
