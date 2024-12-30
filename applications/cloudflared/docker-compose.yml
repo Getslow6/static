@@ -17,7 +17,7 @@ services:
     # Volume configuration for time synchronization and hosts file persistence
     volumes:
       - /etc/localtime:/etc/localtime:ro              # Synchronize time with the host
-      - ./config/hosts:/etc/hosts                     # Mount hosts file from host to container
+      - /etc/hosts:/etc/hosts                         # Mount hosts file from host to container
 
     # Health check configuration to verify Cloudflare Tunnel readiness
     healthcheck:
