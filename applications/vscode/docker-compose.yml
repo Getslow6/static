@@ -7,7 +7,10 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - /srv:/config
+      - /srv/applications/vscode/config:/config
+      - /srv:/srv
+      - ~/.gitconfig:/root/.gitconfig:ro
+      - ~/.git-credentials:/root/.git-credentials:ro
     ports:
       - 3000:3000
     restart: unless-stopped
